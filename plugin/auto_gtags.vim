@@ -19,7 +19,7 @@ augroup auto_gtags
   autocmd BufWritePost * call auto_gtags#gtags(0)
 augroup END
 
-command! CreateGtags call auto_gtags#gtags(1)
+command! GtagsUpdate call auto_gtags#gtags(1)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo
