@@ -16,10 +16,11 @@ set cpo&vim
 
 augroup auto_gtags
   autocmd!
-  autocmd BufWritePost * call auto_gtags#gtags(0)
+  autocmd BufWritePost * call auto_gtags#gtags(-1)
 augroup END
 
-command! GtagsUpdate call auto_gtags#gtags(1)
+command! GtagsCreate call auto_gtags#gtags(1)
+command! GtagsUpdate call auto_gtags#gtags(0)
 
 let &cpo = s:save_cpo
 unlet s:save_cpo

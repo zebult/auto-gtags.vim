@@ -12,11 +12,15 @@ On OSX
 
 Create tags
 
-    :CreateGtags
+    :GtagsCreate
 
-Create at a Writing the file, default `0`
+Update tags
 
-    let g:auto_gtags = 1
+    :GtagsUpdate
+
+Update at a Writing the file, default `0`
+
+    let g:auto_update_gtags = 1
 
 Create the tags in directory, default `.`
 

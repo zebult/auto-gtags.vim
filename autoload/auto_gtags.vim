@@ -41,6 +41,10 @@ if !exists("g:auto_gtags_bin_path")
   let g:auto_gtags_bin_path = 'gtags'
 endif
 
+if !exists("g:auto_global_bin_path")
+  let g:auto_global_bin_path = 'global'
+endif
+
 if !exists("g:auto_gtags_filetype_mode")
   let g:auto_gtags_filetype_mode = 0
 endif
@@ -84,19 +88,31 @@ function! auto_gtags#gtags_cmd()
   return s:gtags_cmd
 endfunction
 
+function! auto_gtags#update_cmd()
+  let s:gtags_cmd = ''
+  let s:tags_bin_path = g:auto_global_bin_path
+  let s:gtags_cmd = s:tags_bin_path.' -uv'
+  return s:gtags_cmd
+endfunction
+
 function! auto_gtags#gtags(recreate)
-  if g:auto_gtags ==# 0 && a:recreate ==# 0
+  if a:recreate < 0 && g:auto_gtags != 1
     return
   endif
+
   if a:recreate > 0
     silent! execute '!rm '.auto_gtags#gpath_path().' 2>/dev/null'
     silent! execute '!rm '.auto_gtags#grtags_path().' 2>/dev/null'
     silent! execute '!rm '.auto_gtags#gtags_path().' 2>/dev/null'
-  elseif g:auto_gtags ==# 1 && filereadable(auto_gtags#gtags_path()) == 0
+  elseif filereadable(auto_gtags#gtags_path()) == 0
     return
   endif
 
-  let s:cmd = auto_gtags#gtags_cmd()
+  if a:recreate > 0
+    let s:cmd = auto_gtags#gtags_cmd()
+  else
+    let s:cmd = auto_gtags#update_cmd()
+  endif
   if len(s:cmd) > 0
     silent! execute '!sh -c "'.s:cmd.'" 2>/dev/null &'
   endif
