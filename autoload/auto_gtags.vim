@@ -100,6 +100,10 @@ function! auto_gtags#gtags(recreate)
     return
   endif
 
+  if auto_gtags#is_making_gtags() == 1
+    return
+  endif
+
   if a:recreate > 0
     silent! execute '!rm '.auto_gtags#gpath_path().' 2>/dev/null'
     silent! execute '!rm '.auto_gtags#grtags_path().' 2>/dev/null'
@@ -120,6 +124,11 @@ function! auto_gtags#gtags(recreate)
   if a:recreate > 0
     redraw!
   endif
+endfunction
+
+function! auto_gtags#is_making_gtags()
+  let ps = system('ps')
+  return match(ps, 'gtags.*-v') != -1
 endfunction
 
 let &cpo = s:save_cpo
