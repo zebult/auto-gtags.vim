@@ -49,6 +49,13 @@ if !exists("g:auto_gtags_filetype_mode")
   let g:auto_gtags_filetype_mode = 0
 endif
 
+if !exists("g:auto_gtags_is_making_str")
+  let g:auto_gtags_is_making_str = 'gtags making'
+endif
+
+if !exists("g:auto_gtags_is_not_making_str")
+  let g:auto_gtags_is_not_making_str = 'gtags free'
+endif
 "------------------------
 " function
 "------------------------
@@ -129,6 +136,16 @@ endfunction
 function! auto_gtags#is_making_gtags()
   let ps = system('ps')
   return match(ps, 'gtags.*-v') != -1
+endfunction
+
+function! auto_gtags#is_making_gtags_str()
+  let str = 'none'
+  if auto_gtags#is_making_gtags() == 1
+    let str = g:auto_gtags_is_making_str
+  else
+    let str = g:auto_gtags_is_not_making_str
+  endif
+  return str
 endfunction
 
 let &cpo = s:save_cpo
