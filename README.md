@@ -20,7 +20,7 @@ Update tags
 
 Update at a Writing the file, default `0`
 
-    let g:auto_update_gtags = 1
+    let g:auto_gtags = 1
 
 Create the tags in directory, default `.`
 
